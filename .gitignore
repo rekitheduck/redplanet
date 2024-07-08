@@ -1,3 +1,8 @@
 build
 iso
 .vscode
+
+# Toolchain stuff
+meta/toolchain
+meta/toolchain-build
+meta/toolchain-src
