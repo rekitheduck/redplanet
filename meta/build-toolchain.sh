@@ -6,9 +6,7 @@
 BINUTILS_VERSION=2.42
 GCC_VERSION=13.2.0
 
-# TODO: Change this over when we get a custom toolchain
-# TARGET=i686-elf-redplanet
-TARGET=i686-elf
+TARGET=i686-elf-redplanet
 
 META_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PREFIX="${META_DIR}/toolchain"
@@ -94,6 +92,10 @@ pushd "${META_DIR}/toolchain-src"
 if ! test -d $BINUTILS; then
     echo -e "Extracting ${GREEN}${BINUTILS_PACKAGE}${NC} ..."
     tar -xf $BINUTILS_PACKAGE
+    echo -e "Patching ${GREEN}${BINUTILS_PACKAGE}${NC} ..."
+    pushd $BINUTILS
+    patch -p1 < "${META_DIR}/toolchain-patches/binutils/RedPlanet-target.patch"
+    popd
 else
     echo -e "Skipping extracting ${GREEN}${BINUTILS_PACKAGE}${NC} as it is already extracted"
 fi

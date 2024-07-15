@@ -1,0 +1,103 @@
+diff --color -Naur a/bfd/config.bfd b/bfd/config.bfd
+--- a/bfd/config.bfd	2024-01-29 02:00:00.000000000 +0200
++++ b/bfd/config.bfd	2024-07-15 17:10:34.563785168 +0300
+@@ -665,6 +665,11 @@
+     targ_selvecs=
+     targ64_selvecs=x86_64_elf64_vec
+     ;;
++  i[3-7]86-*-redplanet*)
++    targ_defvec=i386_elf32_vec
++    targ_selvecs=
++    targ64_selvecs=x86_64_elf64_vec
++    ;;
+ #ifdef BFD64
+   x86_64-*-cloudabi*)
+     targ_defvec=x86_64_elf64_cloudabi_vec
+diff --color -Naur a/config.sub b/config.sub
+--- a/config.sub	2024-01-29 02:00:00.000000000 +0200
++++ b/config.sub	2024-07-15 17:03:54.395864049 +0300
+@@ -1766,7 +1766,7 @@
+ 	     | onefs* | tirtos* | phoenix* | fuchsia* | redox* | bme* \
+ 	     | midnightbsd* | amdhsa* | unleashed* | emscripten* | wasi* \
+ 	     | nsk* | powerunix* | genode* | zvmoe* | qnx* | emx* | zephyr* \
+-	     | fiwix* | mlibc* | cos* | mbr* )
++	     | fiwix* | mlibc* | cos* | mbr* | redplanet* )
+ 		;;
+ 	# This one is extra strict with allowed versions
+ 	sco3.2v2 | sco3.2v[4-9]* | sco5v6*)
+diff --color -Naur a/gas/configure.tgt b/gas/configure.tgt
+--- a/gas/configure.tgt	2024-01-29 02:00:00.000000000 +0200
++++ b/gas/configure.tgt	2024-07-15 17:12:12.732899657 +0300
+@@ -6,12 +6,12 @@
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 3 of the License, or
+ # (at your option) any later version.
+-#
++#
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+-#
++#
+ # You should have received a copy of the GNU General Public License
+ # along with this program; see the file COPYING3.  If not see
+ # <http://www.gnu.org/licenses/>.
+@@ -243,6 +243,7 @@
+     esac ;;
+   i386-*-lynxos*)			fmt=elf em=lynx ;;
+   i386-*-redox*)			fmt=elf ;;
++  i386-*-redplanet*)       fmt=elf ;;
+   i386-*-solaris*)			fmt=elf em=solaris ;;
+   i386-*-freebsd* \
+   | i386-*-kfreebsd*-gnu)		fmt=elf em=freebsd ;;
+@@ -340,7 +341,7 @@
+   moxie-*-uclinux)			fmt=elf em=linux ;;
+   moxie-*-moxiebox*)                    fmt=elf endian=little ;;
+   moxie-*-*)				fmt=elf ;;
+-
++
+   mt-*-elf)				fmt=elf bfd_gas=yes ;;
+
+   msp430-*-*)				fmt=elf ;;
+@@ -429,7 +430,7 @@
+   wasm32-*-*)                           fmt=elf ;;
+
+   xstormy16-*-*)			fmt=elf ;;
+-
++
+   xgate-*-*)    			fmt=elf ;;
+
+   xtensa*-*-*)				fmt=elf ;;
+diff --color -Naur a/ld/configure.tgt b/ld/configure.tgt
+--- a/ld/configure.tgt	2024-01-29 02:00:00.000000000 +0200
++++ b/ld/configure.tgt	2024-07-15 17:14:29.948588636 +0300
+@@ -384,6 +384,10 @@
+ i[3-7]86-*-redox*)	targ_emul=elf_i386
+ 			targ_extra_emuls=elf_x86_64
+ 			;;
++i[3-7]86-*-redplanet*)	targ_emul=elf_i386_redplanet
++			targ_extra_emuls=elf_i386
++			targ64_extra_emuls=elf_x86_64
++			;;
+ i[3-7]86-*-solaris2*)	targ_emul=elf_i386_sol2
+ 			targ_extra_emuls="elf_i386_ldso elf_i386 elf_iamcu elf_x86_64_sol2 elf_x86_64"
+ 			targ_extra_libpath=$targ_extra_emuls
+diff --color -Naur a/ld/emulparams/elf_i386_redplanet.sh b/ld/emulparams/elf_i386_redplanet.sh
+--- a/ld/emulparams/elf_i386_redplanet.sh	1970-01-01 03:00:00.000000000 +0300
++++ b/ld/emulparams/elf_i386_redplanet.sh	2024-07-15 17:16:10.676008759 +0300
+@@ -0,0 +1,2 @@
++source_sh ${srcdir}/emulparams/elf_i386.sh
++TEXT_START_ADDR=0x08000000
+\ No newline at end of file
+diff --color -Naur a/ld/Makefile.am b/ld/Makefile.am
+--- a/ld/Makefile.am	2024-01-29 02:00:00.000000000 +0200
++++ b/ld/Makefile.am	2024-07-15 17:18:18.667450757 +0300
+@@ -281,6 +281,7 @@
+ 	eelf_i386_fbsd.c \
+ 	eelf_i386_haiku.c \
+ 	eelf_i386_ldso.c \
++	eelf_i386_redplanet.c \
+ 	eelf_i386_sol2.c \
+ 	eelf_i386_vxworks.c \
+ 	eelf_iamcu.c \
