@@ -91,7 +91,7 @@ popd
 
 # Prepare binutils
 pushd "${META_DIR}/toolchain-src"
-if ! test -d $BINUTILS_PACKAGE; then
+if ! test -d $BINUTILS; then
     echo -e "Extracting ${GREEN}${BINUTILS_PACKAGE}${NC} ..."
     tar -xf $BINUTILS_PACKAGE
 else
