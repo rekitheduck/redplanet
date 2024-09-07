@@ -28,21 +28,6 @@ diff --color -Naur a/config.sub b/config.sub
 diff --color -Naur a/gas/configure.tgt b/gas/configure.tgt
 --- a/gas/configure.tgt	2024-01-29 02:00:00.000000000 +0200
 +++ b/gas/configure.tgt	2024-07-15 17:12:12.732899657 +0300
-@@ -6,12 +6,12 @@
- # it under the terms of the GNU General Public License as published by
- # the Free Software Foundation; either version 3 of the License, or
- # (at your option) any later version.
--#
-+#
- # This program is distributed in the hope that it will be useful,
- # but WITHOUT ANY WARRANTY; without even the implied warranty of
- # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- # GNU General Public License for more details.
--#
-+#
- # You should have received a copy of the GNU General Public License
- # along with this program; see the file COPYING3.  If not see
- # <http://www.gnu.org/licenses/>.
 @@ -243,6 +243,7 @@
      esac ;;
    i386-*-lynxos*)			fmt=elf em=lynx ;;
@@ -51,24 +36,6 @@ diff --color -Naur a/gas/configure.tgt b/gas/configure.tgt
    i386-*-solaris*)			fmt=elf em=solaris ;;
    i386-*-freebsd* \
    | i386-*-kfreebsd*-gnu)		fmt=elf em=freebsd ;;
-@@ -340,7 +341,7 @@
-   moxie-*-uclinux)			fmt=elf em=linux ;;
-   moxie-*-moxiebox*)                    fmt=elf endian=little ;;
-   moxie-*-*)				fmt=elf ;;
--
-+
-   mt-*-elf)				fmt=elf bfd_gas=yes ;;
-
-   msp430-*-*)				fmt=elf ;;
-@@ -429,7 +430,7 @@
-   wasm32-*-*)                           fmt=elf ;;
-
-   xstormy16-*-*)			fmt=elf ;;
--
-+
-   xgate-*-*)    			fmt=elf ;;
-
-   xtensa*-*-*)				fmt=elf ;;
 diff --color -Naur a/ld/configure.tgt b/ld/configure.tgt
 --- a/ld/configure.tgt	2024-01-29 02:00:00.000000000 +0200
 +++ b/ld/configure.tgt	2024-07-15 17:14:29.948588636 +0300
