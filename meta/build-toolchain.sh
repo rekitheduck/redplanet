@@ -71,7 +71,7 @@ pushd "${META_DIR}/toolchain-src"
 
 if ! test -f $BINUTILS_PACKAGE; then
     echo -e "${RED}Acquiring ${BINUTILS}${NC} ..."
-    wget https://ftpmirror.gnu.org/gnu/binutils/$BINUTILS_PACKAGE
+    wget https://ftpmirror.gnu.org/gnu/binutils/$BINUTILS_PACKAGE || exit 1
     echo -e "${GREEN}${BINUTILS_PACKAGE} acquired${NC}"
 else
     echo -e "${GREEN}${BINUTILS_PACKAGE} found, skipping${NC}..."
@@ -79,7 +79,7 @@ fi
 
 if ! test -f $GCC_PACKAGE; then
     echo -e "${RED}Acquiring ${GCC}${NC} ..."
-    wget https://ftpmirror.gnu.org/gnu/gcc/${GCC}/${GCC_PACKAGE}
+    wget https://ftpmirror.gnu.org/gnu/gcc/${GCC}/${GCC_PACKAGE} || exit 1
     echo -e "${GREEN}${GCC_PACKAGE} acquired${NC}"
 else
     echo -e "${GREEN}${GCC_PACKAGE} found, skipping${NC}..."
@@ -91,10 +91,10 @@ popd
 pushd "${META_DIR}/toolchain-src"
 if ! test -d $BINUTILS; then
     echo -e "Extracting ${GREEN}${BINUTILS_PACKAGE}${NC} ..."
-    tar -xf $BINUTILS_PACKAGE
+    tar -xf $BINUTILS_PACKAGE || exit 1
     echo -e "Patching ${GREEN}${BINUTILS_PACKAGE}${NC} ..."
     pushd $BINUTILS
-    patch -p1 < "${META_DIR}/toolchain-patches/binutils/RedPlanet-target.patch"
+    patch -p1 < "${META_DIR}/toolchain-patches/binutils/RedPlanet-target.patch" || exit 1
     popd
 else
     echo -e "Skipping extracting ${GREEN}${BINUTILS_PACKAGE}${NC} as it is already extracted"
