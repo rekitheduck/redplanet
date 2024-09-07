@@ -68,3 +68,22 @@ diff --color -Naur a/ld/Makefile.am b/ld/Makefile.am
  	eelf_i386_sol2.c \
  	eelf_i386_vxworks.c \
  	eelf_iamcu.c \
+diff --color a/ld/Makefile.in b/ld/Makefile.in
+--- a/ld/Makefile.in
++++ b/ld/Makefile.in
+@@ -792,6 +792,7 @@ ALL_EMULATION_SOURCES = \
+ 	eelf_i386_fbsd.c \
+ 	eelf_i386_haiku.c \
+ 	eelf_i386_ldso.c \
++	eelf_i386_redplanet.c \
+ 	eelf_i386_sol2.c \
+ 	eelf_i386_vxworks.c \
+ 	eelf_iamcu.c \
+@@ -1482,6 +1483,7 @@ distclean-compile:
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eelf_i386_fbsd.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eelf_i386_haiku.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eelf_i386_ldso.Po@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eelf_i386_redplanet.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eelf_i386_sol2.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eelf_i386_vxworks.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eelf_iamcu.Po@am__quote@
